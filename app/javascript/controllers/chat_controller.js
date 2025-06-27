@@ -5,33 +5,26 @@ export default class extends Controller {
 
     connect() {
         console.log("Chat controller connected")
-        this.scrollToBottom()
-        this.focusInput()
+        // Warten bis Inhalte geladen sind
+        setTimeout(() => {
+            this.scrollToBottom()
+            this.focusInput()
+        }, 100)
+
+        // Auch bei Window resize scrollen
+        this.resizeHandler = this.scrollToBottom.bind(this)
+        window.addEventListener('resize', this.resizeHandler)
     }
 
-    quickReply(event) {
-        const replyText = event.currentTarget.dataset.reply
-        this.inputTarget.value = replyText
-        this.focusInput()
-    }
-
-    giveFeedback(event) {
-        const feedback = event.currentTarget.dataset.feedback
-
-        // Alle feedback buttons deaktivieren
-        this.element.querySelectorAll('.feedback-btn').forEach(btn => {
-            btn.classList.remove('active')
-        })
-
-        // Aktuellen Button aktivieren
-        event.currentTarget.classList.add('active')
-
-        console.log('Feedback:', feedback)
+    disconnect() {
+        window.removeEventListener('resize', this.resizeHandler)
     }
 
     scrollToBottom() {
         if (this.hasMessagesTarget) {
-            this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight
+            const container = this.messagesTarget
+            container.scrollTop = container.scrollHeight
+            console.log('Scrolled to:', container.scrollHeight, 'Current scroll:', container.scrollTop)
         }
     }
 

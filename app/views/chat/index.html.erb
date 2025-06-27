@@ -32,21 +32,10 @@
 
   <!-- Quick Actions -->
   <div class="quick-actions">
-    <button class="quick-reply"
-            data-reply="Ist Ihre Frage damit beantwortet?"
-            data-action="click->chat#quickReply">
-      Ist Ihre Frage damit beantwortet?
-    </button>
-    <div class="feedback-buttons">
-      <button class="feedback-btn"
-              data-feedback="like"
-              data-action="click->chat#giveFeedback"
-              title="Hilfreich">👍</button>
-      <button class="feedback-btn"
-              data-feedback="dislike"
-              data-action="click->chat#giveFeedback"
-              title="Nicht hilfreich">👎</button>
-    </div>
+    <%= form_with url: quick_reply_path, local: true, class: "quick-reply-form" do |form| %>
+      <%= hidden_field_tag :reply_text, "Ist Ihre Frage damit beantwortet?" %>
+      <%= submit_tag "Ist Ihre Frage damit beantwortet?", class: "quick-reply-btn" %>
+    <% end %>
   </div>
 
   <!-- Input Form -->
