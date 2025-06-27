@@ -1,0 +1,33 @@
+<%= turbo_stream.append "messages-list" do %>
+  <%= render partial: "messages/message", locals: { message: @message } %>
+<% end %>
+
+<%= turbo_stream.replace "message_form" do %>
+  <%= form_with model: Message.new, url: messages_path, local: false, id: "message_form" do |form| %>
+    <div class="input-container">
+      <%= form.text_field :content,
+                          placeholder: "Nachricht schreiben",
+                          class: "message-input",
+                          id: "messageInput",
+                          autocomplete: "off" %>
+      <div class="input-actions">
+        <button type="button" class="attachment-btn">📎</button>
+        <%= form.submit "➤", class: "send-btn", id: "sendBtn" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.append "messages" do %>
+  <script>
+      // Scroll to bottom
+      const messagesContainer = document.getElementById('messages');
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+      // Clear input
+      document.getElementById('messageInput').value = '';
+
+      // Show typing indicator
+      showTypingIndicator();
+  </script>
+<% end %>

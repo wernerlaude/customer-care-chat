@@ -1,0 +1,13 @@
+<div class="message <%= message.from_visitor? ? 'user' : 'agent' %>">
+  <div class="message-avatar">
+    <%= message.from_visitor? ? '👤' : '🤖' %>
+  </div>
+  <div>
+    <div class="message-content">
+      <%= simple_format(message.content) %>
+    </div>
+    <div class="message-time">
+      <%= message.created_at.strftime("%H:%M") %>
+    </div>
+  </div>
+</div>
